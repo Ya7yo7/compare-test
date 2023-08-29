@@ -7,13 +7,19 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Component
 @FeignClient(value = "exchange", url = "https://v6.exchangerate-api.com/v6/${access_key}")
 public interface Exchange {
 
-    @GetMapping("/compare/{base}/{target1}/{target2}/{amount}")
-    CompareDto compare(@PathVariable String base, @PathVariable String target1, @PathVariable String target2,@PathVariable String amount);
+    @GetMapping("/compare")
+    CompareDto Compare(@RequestParam String base,
+    @RequestParam
+    List<String> targetCurrencies,
+    @RequestParam String amount);
 
 
 

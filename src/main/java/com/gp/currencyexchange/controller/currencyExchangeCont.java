@@ -3,10 +3,8 @@ package com.gp.currencyexchange.controller;
 import com.gp.currencyexchange.dto.response.*;
 import com.gp.currencyexchange.service.ExchangeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,9 +21,20 @@ public class currencyExchangeCont {
         return exchange.convert(base, target, amount);
     }
 
-    @GetMapping("/compare/{base}/{target1}/{target2}/{amount}")
-    CompareDto compare(@PathVariable String base, @PathVariable String target1, @PathVariable String target2,@PathVariable String amount) {
-        return exchange.Compare(base, target1, target2,amount);
+   // @GetMapping("/compare/{base}/{target1}/{target2}/{amount}")
+    //CompareDto compare(@PathVariable String base, @PathVariable String target1, @PathVariable String target2,@PathVariable String amount) {
+      //  return exchange.Compare(base, target1, target2,amount);
+    //}
+
+    @GetMapping("/compare")
+    public List<CompareDto> compareCurrencies(
+            @RequestParam String base,
+            @RequestParam List<String> targetCurrencies,
+            @RequestParam String amount) {
+
+        // Call the Compare function with the provided parameters
+        List<CompareDto> comparisons = compareCurrencies(base, targetCurrencies, amount);
+
+        return comparisons;
     }
-    // f
 }

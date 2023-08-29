@@ -7,6 +7,9 @@ import com.gp.currencyexchange.service.ExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -23,10 +26,22 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
 
-    public CompareDto Compare(String base, String target1, String target2,String amount) {
-        ConversionDto compare=convert(base,target1,amount);
-        ConversionDto compare2=convert(base,target2,amount);
-        return new CompareDto(base, target1, target2, compare.getConversion_rate(), compare2.getConversion_rate(),amount);
+    //public CompareDto Compare(String base, String target1, String target2,String amount) {
+        //ConversionDto compare=convert(base,target1,amount);
+       // ConversionDto compare2=convert(base,target2,amount);
+     //   return new CompareDto(base, target1, target2, compare.getConversion_rate(), compare2.getConversion_rate(),amount);
+   // }
+
+    public List<CompareDto> Compare(String base, List<String> targetCurrencies, String amount) {
+        List<CompareDto> comparisons = new ArrayList<>();
+
+        for (String target : targetCurrencies) {
+            ConversionDto compare = convert(base, target, amount);
+            comparisons.add(new CompareDto(base, target, compare.getConversion_rate(), amount));
+        }
+
+        return comparisons;
     }
+
 
 }
